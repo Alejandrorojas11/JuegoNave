@@ -1,7 +1,5 @@
 import pygame
-import random
-
-from game.utils.constants import HEART,BG,BG2,GAMEOVER,ICON,FIREBALL,SHIELD, SCREEN_HEIGHT, SCREEN_WIDTH ,  TITLE, FPS, FONT_STYLE
+from game.utils.constants import HEART,BG,GAMEOVER,ICON,FIREBALL,SHIELD, SCREEN_HEIGHT, SCREEN_WIDTH ,  TITLE, FPS, FONT_STYLE
 
 from game.components.spaceship import Spaceship
 from game.components.enemies.enemy_manager import EnemyManager
@@ -11,6 +9,10 @@ from game.components.powers.power_manager import PowerManager
 
 class Game:
     def __init__(self):
+        """
+            PARAMETROS DE USO GLOBAL, DE LA FUNCION GAME PARA LA INICIALIZACION DE PANTALLA Y FUNCIONALIDADES
+            DE NAVES O OBJETIVOS EN LA FUNCION UPDATE.
+        """
         pygame.init()
         pygame.display.set_caption(TITLE)
         pygame.display.set_icon(ICON)
@@ -18,16 +20,13 @@ class Game:
         self.clock = pygame.time.Clock()
         self.playing = False
         self.game_speed = 10
-
         self.x_pos_bg = 0
         self.y_pos_bg = 0
-        self.player = Spaceship()
-        self.enemy_manager = EnemyManager()
-        self.bullet_manager = BulletManager()
-        
-        self.power_manager = PowerManager()
-        self.listvalues = 0
-        
+        self.player = Spaceship() #INICIALIACION DE CLASE PARA EL DIBUJADO DE LA NAVE (JUGADOR).
+        self.enemy_manager = EnemyManager() #INICIALIZACION DE LA CLASE DEL ENEMIGO, DIBUJADO Y LOGICA
+        self.bullet_manager = BulletManager() #FUNCIONALIDAD DEL DISPARO. 
+        self.power_manager = PowerManager() #INVOCACION DE CLASE DE PODERES.
+        self.listvalues = 0  
         self.previous_lives = self.bullet_manager.lives
 
         self.running = False
@@ -64,7 +63,12 @@ class Game:
                 self.playing = False
 
     def update(self):
-
+        
+        """
+            VALIDADOR DEL PODER DE EL ESCUDO CON LA VARIABLE DEL SPACESHIP
+            ATRIBUTTES: 
+                shiel_active (boolean)
+        """
         if self.player.shield_active:
             if self.previous_lives == 0:
                 self.previous_lives = self.bullet_manager.lives  # Guarda el valor original de las vidas
