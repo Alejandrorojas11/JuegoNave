@@ -8,8 +8,6 @@ from game.components.enemies.enemy_manager import EnemyManager
 from game.components.menus.menu import Menu
 from game.components.bullets.bullet_manager import BulletManager
 from game.components.powers.power_manager import PowerManager
-#from game.components.powers.power_manager import PowerManager2
-
 
 class Game:
     def __init__(self):
@@ -18,7 +16,6 @@ class Game:
         pygame.display.set_icon(ICON)
         self.screen = pygame.display.set_mode ((SCREEN_WIDTH, SCREEN_HEIGHT))
         self.clock = pygame.time.Clock()
-
         self.playing = False
         self.game_speed = 10
 
@@ -88,10 +85,7 @@ class Game:
         self.player.update(user_iput,self)
         self.enemy_manager.update(self)
         self.bullet_manager.update(self)
-        #self.uplive()
-        self.power_manager.update(self)        
-        #self.power_manager2.update(self)        
-
+        self.power_manager.update(self)                
 
     def enabledsountrack(self):
         if self.running: 
@@ -126,7 +120,6 @@ class Game:
     def show_menu(self):
         self.inicio_sound.play()
         self.inicio_sound.set_volume(0.2)
-
         self.menu.reset_screen_collor(self.screen)
         half_screen_heigth = SCREEN_HEIGHT // 2
         half_screen_width = SCREEN_WIDTH // 2
@@ -145,9 +138,8 @@ class Game:
             
             for text, rect in self.menu.texts:
                 self.screen.blit(text, rect)
-
         self.menu.update(self)
-        
+
     def update_score(self):
         self.score += 1
         #self.increase_life()
@@ -169,10 +161,6 @@ class Game:
         vidas_rect = text.get_rect()
         power = text.get_rect()
         power2 = text.get_rect()
-        """
-            PINTAR LAS VIDAS DISPONIBLES
-        """
-    
         max_lives = min(self.bullet_manager.lives, 10)  # Obtener la cantidad máxima de vidas a mostrar (máximo 10)
 
         for i in range(max_lives):
@@ -193,5 +181,4 @@ class Game:
             self.screen.blit(power2_img, power2)
         
         text_rect.center = (1000, 50)
-    
         self.screen.blit(text, text_rect)
